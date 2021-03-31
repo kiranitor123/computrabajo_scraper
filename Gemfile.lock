@@ -90,6 +90,7 @@ DEPENDENCIES
   byebug
   httparty
   nokogiri
+  parser
   rspec (~> 3.4)
   rubocop (~> 0.81.0)
   solargraph
