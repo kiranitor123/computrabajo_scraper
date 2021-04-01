@@ -26,6 +26,12 @@ For linters-checking purposes, run:
 
 `./bin/main.rb`
 
+when it's complet you can get the results in the next file:
+
+`search.html`
+
+You can Use any web browser to see the result.
+
 For Rspect, run:
 
 `rspect`
