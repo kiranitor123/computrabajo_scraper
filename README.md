@@ -1,53 +1,50 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Getting the first proyect Directory of Stores
+# Getting the first proyect Capstone for Ruby, doing a scraper
 
-> This is a project for us to learn about ...
-
-![screenshot-of-tnw-website](./screen.png)
+> This is a project for us to learn more about Ruby, and OOP.
 
 ## Built With
 
 - Git
 - Github
 - VSCode
-- Linters
+- Rubocop
+- Rspect
+- Ruby
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://replit.com/join/ltnolzxq-rolandodiegodie)
 
 
 ## Getting Started
 
 For linters-checking purposes, run:
 
-`npm install`
+`bundle install`
 
+`./bin/main.rb`
 
+For Rspect, run:
+
+`rspect`
 
 To get a local copy up and running follow these simple example steps.
 
+1. Open terminal or command line
+2. Run the following commands
+ - $ `git clone https://github.com/kiranitor123/computrabajo_scraper.git`
+
 ### Prerequisites
 
-Owning a web broser :D
+Owning have Ruby installed :D
 
 ### To review
 
 Just clone the github repositori
 
 Using a GitHub Descktop program or SSH protocol
-
-### Usage
-
-Just run index.html on browser, or run in the command line, like this:
-
-`firefox index.html`
-
-or
-
-`google-chrome index.html`
-
 
 ## Author
 
