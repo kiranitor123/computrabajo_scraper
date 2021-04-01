@@ -13,7 +13,7 @@ class Scrapper
     unparsed_page = HTTParty.get(@url)
     @parsed_page ||= Nokogiri::HTML(unparsed_page)
     @jobs_lists = []
-    @all_jobs = @parsed_page.css('div.breadtitle_mvl').text.split(' ')[0].gsub(',', '').to_i
+    @all_jobs = @parsed_page.css('div.breadtitle_mvl').text.split[0].gsub(',', '').to_i
     init_pages
   end
 
@@ -35,7 +35,7 @@ class Scrapper
     job_list.each do |jobs|
       job = {
         title: jobs.css('h2.tO').text,
-        company: jobs.css('div.w_100.fl.mtb5.lT').text.split(' ').join(' '),
+        company: jobs.css('div.w_100.fl.mtb5.lT').text.split.join(' '),
         description: jobs.css('p').text,
         date: jobs.css('span.dO').text,
         url: URL + jobs.css('a')[0].attributes['href'].value
