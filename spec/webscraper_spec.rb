@@ -1,4 +1,4 @@
-require '../lib/webscraper'
+require_relative '../lib/webscraper'
 
 describe 'Scrapper' do
   let(:context) { '/empleos-en-cochabamba-en-cochabamba?p=' }
