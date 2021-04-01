@@ -3,6 +3,8 @@
 # Getting the first proyect Capstone for Ruby, doing a scraper
 
 > This is a project for us to learn more about Ruby, and OOP.
+> In this scraper you can get information about jobs of the page https://www.computrabajo.com.bo, and you can select the diferent states.
+> And get the result in a HTML Document.
 
 ## Built With
 
@@ -10,7 +12,7 @@
 - Github
 - VSCode
 - Rubocop
-- Rspect
+- Rspec
 - Ruby
 
 ## Live Demo
