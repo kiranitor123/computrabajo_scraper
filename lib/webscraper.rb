@@ -1,53 +1,56 @@
 require 'nokogiri'
 require 'httparty'
-
+require 'byebug'
 class Scrapper
   attr_reader :url, :jobs_lists, :page_init, :pages_in, :last_page
-  def initialize
-    @url = 'https://www.trabajopolis.bo/bolsa-de-trabajo-empleos-en-bolivia/Cochabamba/?searchId=142899.1723&action=search&page=1&listings_per_page=10'
-    unparsed_page = HTTParty.get(url)
-    @parsed_page ||=Nokogiri::HTML(unparsed_page)
+
+  URL = 'https://www.computrabajo.com.bo'.freeze
+
+  def initialize(keyword)
+    @url = URL + keyword + 1.to_s
+    p @url
+    @keyword = keyword
+    unparsed_page = HTTParty.get(@url)
+    @parsed_page ||= Nokogiri::HTML(unparsed_page)
     @jobs_lists = []
-    @all_jobs = @parsed_page.css('div.numberResults')[0].text.split(' ')[0].gsub(',', '').to_i
+    @all_jobs = @parsed_page.css('div.breadtitle_mvl').text.split(' ')[0].gsub(',', '').to_i
     init_pages
   end
 
   def all_jobs
-    get_all_jobs
+    scraper_jobs
     @jobs_lists
   end
 
   private
 
   def init_pages
-    job_list = @parsed_page.css('tr.priorityListing')
-    job_list_normal = @parsed_page.css('tr.evenrow')
-    @pages_in = job_list.count + job_list_normal.count
+    job_list = @parsed_page.css('div.bRS.bClick')
+    @pages_in = job_list.count
     @page_init = 1
-    @last_page = (@all_jobs / pages_in.to_f).round
+    @last_page = (@all_jobs / pages_in.to_f).ceil
   end
 
-  def get_jobs(job_list)
+  def job_listing(job_list)
     job_list.each do |jobs|
       job = {
-        title: jobs.css('span.anuncio-estandar-titulo').text,
-        company: jobs.css('span.anuncio-estandar-empresa').text,
-        location: jobs.css('span.anuncio-estandar-ciudad').text,
-        date: jobs.css('span.date').text,
-        url: jobs.css('a')[0].attributes['href'].value
+        title: jobs.css('h2.tO').text,
+        company: jobs.css('div.w_100.fl.mtb5.lT').text.split(' ').join(' '),
+        description: jobs.css('p').text,
+        date: jobs.css('span.dO').text,
+        url: URL + jobs.css('a')[0].attributes['href'].value
       }
       @jobs_lists << job
     end
   end
 
-  def get_all_jobs
+  def scraper_jobs
     current_page = @page_init
     while current_page <= @last_page
-      pagination_url = "https://www.trabajopolis.bo/bolsa-de-trabajo-empleos-en-bolivia/Cochabamba/?searchId=142899.1723&action=search&page=#{current_page}&listings_per_page=10"
+      pagination_url = URL + @keyword + current_page.to_s
       pagination_unparse_page = HTTParty.get(pagination_url)
       pagination_parsed_page ||= Nokogiri::HTML(pagination_unparse_page)
-      get_jobs(pagination_parsed_page.css('tr.priorityListing'))
-      get_jobs(pagination_parsed_page.css('tr.evenrow'))
+      job_listing(pagination_parsed_page.css('div.bRS.bClick'))
       current_page += 1
     end
   end
