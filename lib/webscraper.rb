@@ -6,10 +6,10 @@ class Scrapper
 
   URL = 'https://www.computrabajo.com.bo'.freeze
 
-  def initialize(keyword)
-    @url = URL + keyword + 1.to_s
+  def initialize(context)
+    @url = URL + context + 1.to_s
     p @url
-    @keyword = keyword
+    @context = context
     unparsed_page = HTTParty.get(@url)
     @parsed_page ||= Nokogiri::HTML(unparsed_page)
     @jobs_lists = []
@@ -47,7 +47,7 @@ class Scrapper
   def scraper_jobs
     current_page = @page_init
     while current_page <= @last_page
-      pagination_url = URL + @keyword + current_page.to_s
+      pagination_url = URL + @context + current_page.to_s
       pagination_unparse_page = HTTParty.get(pagination_url)
       pagination_parsed_page ||= Nokogiri::HTML(pagination_unparse_page)
       job_listing(pagination_parsed_page.css('div.bRS.bClick'))
